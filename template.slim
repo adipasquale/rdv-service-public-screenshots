@@ -1,0 +1,46 @@
+doctype html
+html lang="fr"
+  head
+    meta charset="UTF-8"
+    meta name="viewport" content="width=device-width, initial-scale=1.0"
+    meta http-equiv="X-UA-Compatible" content="ie=edge"
+    title
+      = "RDV Captures d’écran"
+    link rel="stylesheet" href="style.css"
+  body
+    .container
+      header
+        h1
+          | RDV Captures d’écran
+      main
+        aside
+          ul
+            - screenshots_groups.each do |group|
+              li
+                a href="##{group.name}"
+                  = group.name
+                ul
+                  - group.screenshot_names.each do |screenshot_name|
+                    li
+                      a href="##{group.name}-#{screenshot_name}"
+                        = screenshot_name
+
+        .screenshots-wrapper
+          - screenshots_groups.each do |group|
+            h2 id=group.name
+              = group.name
+            - group.screenshot_names.each do |screenshot_name|
+              h3 id="#{group.name}-#{screenshot_name}"
+                = screenshot_name
+              section
+                - %i[mobile desktop].each do |viewport|
+                  div
+                    h4= viewport
+                    - screenshot = group.get_screenshot(name: screenshot_name, viewport:)
+                    section
+                      div
+                        div avant
+                        img loading="lazy" src="before/#{screenshot.filename}" alt="avant - #{screenshot.name}"
+                      div
+                        div après
+                        img loading="lazy" src="after/#{screenshot.filename}" alt="après - #{screenshot.name}"

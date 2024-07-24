@@ -1,0 +1,52 @@
+mairie:
+  - homepage
+  - presentation-agent
+  - prendre-rdv
+aide-numerique:
+  - homepage
+  - presentation-agent
+  - prendre-rdv
+static-pages:
+  - contact
+  - mds
+  - accessibility
+  - mentions-legales
+  - cgu
+  - politique-de-confidentialite
+  - domaines
+  - stats
+  - stats-notifications
+  - connexion-super-admins
+prise-rdv:
+  - home
+  - selection-service
+  - selection-motif
+  - selection-lieu
+  - selection-creneau
+  - connexion
+  - etape-informations-usager
+  - etape-choix-usager
+  - etape-confirmation
+user-account:
+  - mes-informations
+  - modale-ajouter-un-proche
+  - modifier-un-proche
+  - mon-compte
+  - mes-rdvs
+  - deplacer-rdv
+  - deplacer-rdv-confirmation
+  - annuler-rdv
+invitation:
+  - invitation-manuelle
+  - verification-initiales
+prise-rdv-collectif:
+  - selection-motif
+  - selection-creneau
+  - etape-confirmation
+  - rdv
+  - modifier-participants
+  - menu-user-logged-in
+inscription:
+  - inscription
+  - definir-mot-de-passe
+  - mot-de-passe-oublie
