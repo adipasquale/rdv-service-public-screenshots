@@ -11,7 +11,7 @@ require_relative "structures"
 # use optparse to get the directory patho
 OptionParser.new do |opts|
   opts.banner = "Usage: build_site.rb [options]"
-  opts.on("-d", "--dirpath DIRPATH", "Directory path that contains before/ and after/ with screenshots") do |dirpath|
+  opts.on("-d", "--dirpath DIRPATH", "Directory path that contains avant/ and après/ with screenshots") do |dirpath|
     @dirpath = dirpath
   end
 end.parse!
@@ -21,19 +21,7 @@ unless @dirpath
   exit 1
 end
 
-yaml_tree = YAML.load_file(File.join(__dir__, "screenshots.yaml"))
-
-screenshots_groups = yaml_tree.map do |group_name, screenshots_names|
-  group = ScreenshotsGroup.new(group_name)
-  screenshots_names.each do |name|
-    group.screenshots << Screenshot.new(viewport: :desktop, name:, group:)
-    group.screenshots << Screenshot.new(viewport: :mobile, name:, group:)
-  end
-  group
-end
-
-# require "byebug"
-# byebug
+screenshots_groups = ScreenshotsGroup.build_from_yaml(dirpath: @dirpath)
 
 html = Slim::Template.new(File.join(__dir__, "template.slim")).render(OpenStruct.new(screenshots_groups:))
 File.write(File.join(@dirpath, "index.html"), html)

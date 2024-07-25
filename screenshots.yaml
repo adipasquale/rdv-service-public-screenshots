@@ -10,13 +10,13 @@ static-pages:
   - contact
   - mds
   - accessibility
-  - mentions-legales
+  - mentions_legales
   - cgu
-  - politique-de-confidentialite
+  - politique_de_confidentialite
   - domaines
   - stats
   - stats-notifications
-  - connexion-super-admins
+  - connexion_super_admins
 prise-rdv:
   - home
   - selection-service

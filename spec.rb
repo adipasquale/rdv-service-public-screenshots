@@ -199,11 +199,10 @@ RSpec.describe "public pages", type: :feature, js: true do
     def take_screenshot(name)
       sleep 0.2
       @groups ||= {}
-      @groups[@current_group_name] ||= ScreenshotsGroup.new(@current_group_name)
+      @groups[@current_group_name] ||= ScreenshotsGroup.new(name: @current_group_name, dirpath: ENV["OUTPUT_DIR"])
       group = @groups[@current_group_name]
-      screenshot = Screenshot.new(viewport: @current_viewport, name:, group:)
-      path = File.join ENV["OUTPUT_DIR"], screenshot.filename
-      page.driver.browser.save_full_page_screenshot path
+      screenshot = Screenshot.new(viewport: @current_viewport, name:, group:, role: ENV["ROLE"] || "après")
+      page.driver.browser.save_full_page_screenshot screenshot.path
     end
   end
 end

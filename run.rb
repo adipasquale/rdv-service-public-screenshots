@@ -3,7 +3,7 @@
 require "active_support/all"
 
 # get the current git branch name
-branch = `git rev-parse --abbrev-ref HEAD`
+branch = `git rev-parse --abbrev-ref HEAD`.strip
 
 if branch == "production"
   puts "You are on the production branch. Please checkout to another branch."
@@ -34,24 +34,22 @@ end
 
 output_dirname = "#{timestamp}_#{branch.parameterize}"
 output_dirpath = File.join(__dir__, output_dirname)
-output_dirpath_after = File.join(output_dirpath, "after")
-output_dirpath_before = File.join(output_dirpath, "before")
+output_dirpath_before, output_dirpath_after = %w[avant après].map { File.join(output_dirpath, _1) }
 puts "creating folders #{output_dirpath_before} and #{output_dirpath_after} ..."
 FileUtils.mkdir_p([output_dirpath_before, output_dirpath_after])
 
-run_command "OUTPUT_DIR=#{output_dirpath_after} RAILS_ENV=test ./bin/bundle exec rspec #{__dir__}/spec.rb"
+run_command "ROLE=\"après\" OUTPUT_DIR=#{output_dirpath} RAILS_ENV=test bundle exec rspec #{__dir__}/spec.rb"
 
 exit(1) unless run_command("git checkout production")
 puts "waiting 10s for webpacker ..."
 sleep 10 # wait for webpacker to recompile
 
-run_command "OUTPUT_DIR=#{output_dirpath_before} RAILS_ENV=test ./bin/bundle exec rspec #{__dir__}/spec.rb"
+run_command "ROLE=avant OUTPUT_DIR=#{output_dirpath} RAILS_ENV=test bundle exec rspec #{__dir__}/spec.rb"
 
 exit(1) unless run_command("git checkout -")
 
 # pngs_path = File.join(output_dirpath, "**/*.png")
 # run_command "pngquant --ext .png --force #{pngs_path}"
-# run_command "mogrify -resize 60% #{pngs_path}"
 
 puts "running build_site.rb ..."
 exit(1) unless run_command("ruby #{__dir__}/build_site.rb -d #{output_dirpath}")
