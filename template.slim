@@ -17,8 +17,7 @@ html lang="fr"
           ul
             - screenshots_groups.each do |group|
               li
-                a href="##{group.name}"
-                  = group.name
+                = group.name
                 ul
                   - group.screenshot_names.each do |screenshot_name|
                     li
@@ -27,11 +26,9 @@ html lang="fr"
 
         .screenshots-wrapper
           - screenshots_groups.each do |group|
-            h2 id=group.name
-              = group.name
             - group.screenshot_names.each do |screenshot_name|
               h3 id="#{group.name}-#{screenshot_name}"
-                = screenshot_name
+                = "#{group.name} / #{screenshot_name}"
               section
                 - %i[mobile desktop].each do |viewport|
                   div

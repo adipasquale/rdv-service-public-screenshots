@@ -72,11 +72,11 @@ RSpec.describe "public pages", type: :feature, js: true do
     def run_screenshots # rubocop:disable Metrics/MethodLength
       Capybara.current_driver = @current_viewport
 
-      %w[mairie aide-numerique].each do |domain|
+      %w[solidarites mairie aide-numerique].each do |domain|
         base_url = "http://www.rdv-#{domain}.localhost:3000"
         enter_group domain
         visit base_url
-        take_screenshot "homepage"
+        take_screenshot "accueil"
         visit "#{base_url}/presentation_agent"
         take_screenshot "presentation-agent"
         visit "#{base_url}/prendre_rdv"
@@ -91,7 +91,6 @@ RSpec.describe "public pages", type: :feature, js: true do
 
       enter_group "prise-rdv"
       visit root_path
-      take_screenshot "home"
       # from spec/features/users/online_booking/default_spec.rb
       fill_in("search_where", with: "79 Rue de Plaisance, 92250 La Garenne-Colombes")
       find("#search_departement", visible: :all) # permet d'attendre que l'élément soit dans le DOM

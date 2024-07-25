@@ -1,9 +1,13 @@
+solidarites:
+  - accueil
+  - presentation-agent
+  - prendre-rdv
 mairie:
-  - homepage
+  - accueil
   - presentation-agent
   - prendre-rdv
 aide-numerique:
-  - homepage
+  - accueil
   - presentation-agent
   - prendre-rdv
 static-pages:
@@ -18,7 +22,6 @@ static-pages:
   - stats-notifications
   - connexion_super_admins
 prise-rdv:
-  - home
   - selection-service
   - selection-motif
   - selection-lieu
