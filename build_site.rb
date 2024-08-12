@@ -25,7 +25,7 @@ screenshots_groups = ScreenshotsGroup.build_from_yaml(dirpath: @dirpath)
 
 html = Slim::Template.new(File.join(__dir__, "template.slim")).render(OpenStruct.new(screenshots_groups:))
 File.write(File.join(@dirpath, "index.html"), html)
-system "ln -s #{File.join(__dir__, 'style.css')} #{@dirpath}/style.css"
+system "cp #{File.join(__dir__, 'style.css')} #{@dirpath}/style.css"
 system "open #{@dirpath}/index.html"
 
 # system "cp #{File.join(__dir__, 'style.css')} #{@dirpath}"

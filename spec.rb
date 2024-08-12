@@ -22,23 +22,23 @@ RSpec.describe "public pages", type: :feature, js: true do
   end
 
   context "default" do
-    let(:now) { Time.zone.now }
-    # from spec/features/users/online_booking/default_spec.rb
-    let!(:territory92) { create(:territory, departement_number: "92") }
-    let!(:organisation) { create(:organisation, :with_contact, territory: territory92) }
-    let!(:service_medical) { create(:service, name: "Service Médical") }
-    let!(:service_social) { create(:service, name: "Service Social") }
-    let!(:motif_vaccination) { create(:motif, name: "Vaccination", organisation: organisation, restriction_for_rdv: nil, service: service_medical) }
-    let!(:motif_tel) { create(:motif, :by_phone, name: "Télé consultation", organisation: organisation, restriction_for_rdv: nil, service: service_medical) }
-    let!(:motif_collectif) { create(:motif, :collectif, name: "Atelier collectif", organisation: organisation, restriction_for_rdv: nil, service: service_social) }
-    let!(:motif_rsa) { create(:motif, name: "poursuite RSA", organisation: organisation, restriction_for_rdv: nil, service: service_social) }
-    let!(:lieu_centre) { create(:lieu, name: "MDS Centre", organisation: organisation) }
-    let!(:lieu_est) { create(:lieu, name: "MJD Est", organisation: organisation) }
-    let!(:plage_ouverture_vaccination) { create(:plage_ouverture, :daily, first_day: now + 1.month, motifs: [motif_vaccination], lieu: lieu_centre, organisation: organisation) }
-    let!(:plage_ouverture_motif_tel) { create(:plage_ouverture, :daily, first_day: now + 1.month, motifs: [motif_tel], lieu: lieu_centre, organisation: organisation) }
-    let!(:plage_ouverture_rsa) { create(:plage_ouverture, :daily, first_day: now + 1.month, motifs: [motif_rsa], lieu: lieu_est, organisation: organisation) }
-    let!(:agent) { create(:agent, organisations: [organisation]) }
-    let!(:rdv_collectifs) do
+    before do
+      now = Time.zone.now
+      # from spec/features/users/online_booking/default_spec.rb
+      territory92 = create(:territory, departement_number: "92")
+      organisation = create(:organisation, :with_contact, territory: territory92)
+      service_medical = create(:service, name: "Service Médical")
+      service_social = create(:service, name: "Service Social")
+      motif_vaccination = create(:motif, name: "Vaccination", organisation: organisation, restriction_for_rdv: nil, service: service_medical)
+      motif_tel = create(:motif, :by_phone, name: "Télé consultation", organisation: organisation, restriction_for_rdv: nil, service: service_medical)
+      motif_collectif = create(:motif, :collectif, name: "Atelier collectif", organisation: organisation, restriction_for_rdv: nil, service: service_social)
+      motif_rsa = create(:motif, name: "poursuite RSA", organisation: organisation, restriction_for_rdv: nil, service: service_social)
+      lieu_centre = create(:lieu, name: "MDS Centre", organisation: organisation)
+      lieu_est = create(:lieu, name: "MJD Est", organisation: organisation)
+      _plage_ouverture_vaccination = create(:plage_ouverture, :daily, first_day: now + 1.month, motifs: [motif_vaccination], lieu: lieu_centre, organisation: organisation)
+      _plage_ouverture_motif_tel = create(:plage_ouverture, :daily, first_day: now + 1.month, motifs: [motif_tel], lieu: lieu_centre, organisation: organisation)
+      _plage_ouverture_rsa = create(:plage_ouverture, :daily, first_day: now + 1.month, motifs: [motif_rsa], lieu: lieu_est, organisation: organisation)
+      agent = create(:agent, organisations: [organisation])
       3.times do |i|
         create(
           :rdv,
@@ -49,9 +49,8 @@ RSpec.describe "public pages", type: :feature, js: true do
           agents: [agent]
         )
       end
+      _user = create(:user, first_name: "Jean", last_name: "Dupont", email: "jean.dupont@lycos.fr", password: "Rdvservicepublictest1!")
     end
-
-    let!(:user) { create(:user, first_name: "Jean", last_name: "Dupont", email: "jean.dupont@lycos.fr", password: "Rdvservicepublictest1!") }
 
     it "screenshots" do
       @viewports = { mobile: {}, desktop: {} }
